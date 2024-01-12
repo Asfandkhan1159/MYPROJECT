@@ -1,0 +1,56 @@
+/* SignupPage.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+.signup-container {
+    background: #FFFFFF;
+    box-shadow: 0px 4px 50px 0px #0000002B;
+    padding: 40px 60px;
+    border-radius: 5px;
+  }
+  
+  .form-container {
+    margin: 40px auto;
+  }
+  
+  .input-label {
+    align-self: start;
+   
+    /* margin-top: 2.3rem ; */
+    font-family: Poppins;
+    font-size: 13px;
+    font-weight: 500px;
+    line-height: 20px;
+ 
+    text-align: left;
+  color: #232323;
+
+
+  }
+.btn-submit{
+    width: 416px;
+    height: 64px;
+    border-radius: 5px;
+background-color: #0D3D2F;
+font-size: 18px;
+font-weight: 600;
+  }
+  .signup-heading {
+    width: 121px;
+    height: 48px;
+    /* position: absolute; */
+    top: 157px;
+    left: 660px;
+    font-family: Poppins;
+font-size: 32px;
+font-weight: 600;
+line-height: 48px;
+letter-spacing: 0em;
+text-align: left;
+
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background: #f0f0f0; */
+    /* Add any other desired styles here */
+  }
+  

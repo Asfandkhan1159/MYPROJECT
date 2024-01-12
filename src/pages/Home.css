@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+body {
+    margin: 0; line-height: normal;
+}
+.lineDiv {
+    position: relative;
+    border-right: 0.9px solid #d9d9d9;
+    box-sizing: border-box;
+    width: 1px;
+    height: 98.2px;
+}
+
+.btn{
+   position: absolute;
+   top: 139.85px;
+   left: calc(50% - 178.45px);
+   border-radius: 4.54px;
+   background-color: #0d3d2f;
+   width: 84.46px;
+   height: 25.43px;
+   text-align: center;
+}

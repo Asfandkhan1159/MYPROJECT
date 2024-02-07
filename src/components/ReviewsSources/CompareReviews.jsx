@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import ReviewSourcesData from './ReviewSourcesData';
-import { Box, Avatar, Typography, Card, CardContent, Grid, Chip } from '@mui/material';
+import { Box, Avatar, Typography, Card, CardContent, Grid } from '@mui/material';
 import Rating from '@mui/material/Rating';
-
+import Autocomplete from '@mui/joy/Autocomplete';
+import Chip from '@mui/joy/Chip'
 const CompareReviews = () => {
   const [selectedSources, setSelectedSources] = useState(['OpenTable', 'Yelp']);
   const [filteredReviews, setFilteredReviews] = useState([]);
-  const [selectedRating, setSelectedRating] = useState('All'); // State for selected rating
+  const [selectedRatings, setSelectedRatings] = useState(['All']); // State for selected ratings
 
   const handleSourceClick = (source) => {
     const updatedSources = selectedSources.includes(source)
@@ -15,23 +16,23 @@ const CompareReviews = () => {
     setSelectedSources(updatedSources);
   };
 
-  const handleRatingClick = (rating) => {
-    setSelectedRating(rating === selectedRating ? 'All' : rating);
+  const handleRatingChange = (event, newValue) => {
+    setSelectedRatings(newValue);
   };
 
   useEffect(() => {
     let filtered = ReviewSourcesData.filter((source) => selectedSources.includes(source.name));
 
-    // Filter by selected rating
-    if (selectedRating !== 'All') {
+    // Filter by selected ratings
+    if (selectedRatings.length > 0 && !selectedRatings.includes('All')) {
       filtered = filtered.map((source) => ({
         ...source,
-        reviews: source.reviews.filter((review) => review.rating === parseFloat(selectedRating)),
+        reviews: source.reviews.filter((review) => selectedRatings.includes(review.rating.toString())),
       }));
     }
 
     setFilteredReviews(filtered);
-  }, [selectedSources, selectedRating]);
+  }, [selectedSources, selectedRatings]);
 
   return (
     <Box>
@@ -41,25 +42,37 @@ const CompareReviews = () => {
             {/* Select Sources Chips */}
             {ReviewSourcesData.map((source, index) => (
               <Grid item key={index}>
+                
                 <Chip
+                  key={source}
                   label={source.name}
                   onClick={() => handleSourceClick(source.name)}
                   color={selectedSources.includes(source.name) ? 'primary' : 'default'}
                   sx={{ margin: 1 }}
-                />
+                  startDecorator={   <Avatar size="sm" alt={source.name} src={source.logo} />}
+                > {source.name}</Chip>
               </Grid>
             ))}
-            {/* Rating Filter Chips */}
-            {['All', '5', '4', '3', '2', '1'].map((rating, index) => (
-              <Grid item key={index}>
-                <Chip
-                  label={rating === 'All' ? 'All stars' : `${rating} stars`}
-                  onClick={() => handleRatingClick(rating)}
-                  color={rating === selectedRating ? 'primary' : 'default'}
-                  sx={{ margin: 1 }}
-                />
-              </Grid>
-            ))}
+            {/* Rating Filter Autocomplete */}
+            <Grid item>
+              <Autocomplete
+                multiple
+                id="tags-default"
+                options={['All', '5', '4', '3', '2', '1']}
+                getOptionLabel={(option) => (option === 'All' ? 'All stars' : `${option} stars`)}
+                value={selectedRatings}
+                onChange={handleRatingChange}
+                renderInput={(params) => (
+                  <Chip
+                    {...params}
+                    variant="outlined"
+                    label="Ratings"
+                    color={selectedRatings.length > 0 ? 'primary' : 'default'}
+                    sx={{ margin: 1 }}
+                  />
+                )}
+              />
+            </Grid>
           </Grid>
           <Box display="flex" justifyContent="space-between" alignItems="start">
             <Typography variant="h6" color="initial">

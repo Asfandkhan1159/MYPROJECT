@@ -8,14 +8,14 @@ const TopReviewSources = () => {
   const theme = useTheme();
   const smScreen = useMediaQuery(theme.breakpoints.down('md'));
   return (
-    <Card sx={{ width:smScreen ? '464px' : '100%' }}>
+    <Card sx={{ width:smScreen ? '264px' : '100%' }}>
       <CardContent>
       <Typography level="h2" fontSize="xl" sx={{ mb: 0.5 }}>
   Top Review Sources
   </Typography>
         <Grid container spacing={2}>
           {ReviewSourcesData.map((source, index) => (
-            <Grid item xs={6} md={4} key={index}>
+            <Grid item xs={12} md={4} key={index}>
               <Box display="flex" alignItems="center">
                 <Avatar alt={source.name} src={source.logo} />
                 <Box ml={2}>

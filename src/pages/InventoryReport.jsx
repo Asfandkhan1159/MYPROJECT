@@ -70,42 +70,29 @@ const Heading = styled(Typography)(({ theme }) => ({
     { field: 'amount', headerName: 'Amount', width: 150 },
     { field: 'category', headerName: 'Category', width: 150 },
   ];
-  const theme = createTheme({
-    breakpoints: {
-      values: {
-        xs: 0,
-        sm: 600,
-        md: 900,
-        lg: 1200,
-        xl: 1536,
-      },
-    },
-  });
+  const theme = useTheme();
   const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
   console.log(smScreen)
   return (
     <React.Fragment>
-       <Box 
-        
-       sx={{ display: 'flex',  width:'100%'  }}>
-        <BoilerPlate >
-        <Box component="main"
-         display={smScreen ? "block" : "flex"}
-         flexDirection={smScreen ? "row" : "column"}
-         justifyContent={smScreen ? "space-between" : "start"}
-         alignItems={smScreen ? "center" : "start"}
+    
+      <BoilerPlate>
+       
 
-        
-        sx={{ flexGrow: 1, mt: 8 }}>
-          <Heading variant="h4">
+        <Box component="main" sx={{ width:"100%", padding:"2rem"}}>
+          <Typography variant="h4" component="div">
             Inventory Report
-          </Heading>
-          <Box sx={{ backgroundColor: "#F6F6F4", padding:"2rem", margin:"2rem" }}>
+          </Typography>
+
+          {/* Your content goes here */}
+          <Box sx={{ backgroundColor: "#F6F6F4", py: "2rem", px:"2rem", width:'100%' }}>
+           
             
-            <OverallInventory/>
-            
-            <Box sx={{marginTop:"2rem"}}>
-              <Grid container spacing={smScreen ? 1 : 12}>
+            <Box >
+              <Grid container spacing={5}>
+                <Grid item md={12}>
+                <OverallInventory/>
+                </Grid>
                 <Grid item md={4} xs={12}>
               <InventorySummary heading={InventoryData.heading}
              text={InventoryData.text}
@@ -142,7 +129,7 @@ const Heading = styled(Typography)(({ theme }) => ({
 </Box>
 <Box
 component="main"
-width={smScreen ? "400px" : "100%"}
+width={smScreen ? "230px" : "100%"}
 sx={{ overflow: 'auto' }}
 
 >
@@ -166,7 +153,7 @@ sx={{ overflow: 'auto' }}
           </Box>
           </Box>
           </BoilerPlate>
-          </Box>
+       
     </React.Fragment>
   )
 }

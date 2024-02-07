@@ -34,127 +34,16 @@ import App from './App';
 import InventoryInsights from './components/Inventory/InventoryInsights.jsx';
 import AI_Feedback from './components/AI_Feedback/AI_Feedback.jsx';
 import SearchAndDisplayData from './components/Search&Display/Search&DisplayData.jsx';
-// const MainLayout = ({ children }) => {
-//   return (
-//     <div style={{ display: 'flex' }}>
-//       <Sidebar />
-//       <main style={{ flexGrow: 1, padding: '16px' }}>
-//         {children}
-//       </main>
-//     </div>
-//   );
-// };
-
-// export default MainLayout;
-const router = createBrowserRouter([
-  {
-    path: '/dashboard',
-    children: [
-      {
-        index: true, // Use index: true for the base route
-        element: <DashBoard />,
-      },
-      {
-        path: 'home', // Relative path, this matches /dashboard/home
-        element: <Home />,
-      }, {
-        path: 'about', // Relative path, this matches /dashboard/home
-        element: <About />,
-      },
-      {
-        path:'Settings',
-        element:<Settings/>
-      },
-      {
-        path: 'AddMenuItem', // Relative path, this matches /dashboard/AddMenuItem
-        element: <AddMenuItem />,
-      },
-      {
-        path: 'restaurantstats', // Relative path, this matches /dashboard/AddMenuItem
-        element: <RestaurantStatistics />,
-      },
-      {
-        path:'purchasinganalytics',
-        element:<PurchasingAnalytics/>
-      },
-      {
-        path:'inventoryreport',
-        element:<InventoryReport/>
-      },
-      {
-        path: 'inventory', // Relative path, this matches /dashboard/AddMenuItem
-        element: <InventoryTable/>,
-      },
-      {
-        path:"vendors",
-        element:<Vendors/>
-      },
-      {
-        path:"getrebates",
-        element:<GetRebates/>
-      },
-      {
-        path:"searchitem",
-        element:<SearchAndDisplayData/>
-      },
-      {
-        path:"insights",
-        element:<InventoryInsights/>
-      },
-      {
-        path:"reviews",
-        element:<Reviews/>
-      },
-      {
-        path:"compareReviews",
-        element:<CompareReviewsComponent/>
-      },
-      {
-        path:"users",
-        element:<User/>
-      },
-      {
-        path:"post",
-        element:<Post/>
-      },
-      {
-        path:"AI_Campaigns",
-        element:<AI_Campaigns/>
-      },
-      {
-        path:"Customer_Mosiacs",
-        element:<CustomerMosiacs/>
-      },
-      {
-        path:"settings",
-        element:<Settings/>
-      },
-    ],
-  },
-  {
-    path: '/login',
-    element: <LoginForm />,
-  },
-  {path:'/', element:<LoginForm/>},
-  {
-    path: '/Signup',
-    element: <SignupPage />,
-  },
-  {
-    path: '/Signup/OTPvalidation/:phoneNumber',
-    element:<Otp/>
-  },
-  
- 
-]);
- 
+import { Outlet } from 'react-router-dom';
+import { BrowserRouter } from "react-router-dom";
+import AppRouter from './AppRouter.jsx';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RestaurantProvider>
   <SettingsProvider>
     <InventoryDataProvider>
       <VendorDataProvider>
-        <RouterProvider router={router} />
-        <App/>
+      
+        <AppRouter/>
       </VendorDataProvider>
     </InventoryDataProvider>
   </SettingsProvider>

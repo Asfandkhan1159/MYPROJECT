@@ -32,9 +32,9 @@ const OverallInventory = () => {
   const smScreen = useMediaQuery(theme.breakpoints.down('md'));
   return (
     <div>
-      <Paper elevation={0} sx={{px:"3rem", width:smScreen ? '364px' : '100%'}}>
+      <Paper elevation={0} sx={{px:"3rem", width:smScreen ? '200px' : '100%'}}>
         <Typography variant="h6" color="initial" sx={{height:"0px"}}>Overall Inventory</Typography>
-        <Grid container spacing={0} sx={{marginTop:"2rem"}}>
+        <Grid container spacing={4} sx={{marginTop:"2rem"}}>
           <Grid item md={3} xs={12}>
             <Typography variant="h6" color="primary" sx={{color:"#1570EF"}}>{category.title}</Typography>
             <InventoryCategories value={category.value} days={category.days}/>

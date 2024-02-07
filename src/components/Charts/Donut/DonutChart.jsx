@@ -1,18 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { ButtonGroup, Button,Grid,Typography, Card,CardContent } from '@mui/material';
+import { ButtonGroup, Button,Grid,Typography, Card,CardContent,useTheme, useMediaQuery } from '@mui/material';
 
 const DonutChart = () => {
+  const theme = useTheme();
+  const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [activeButton, setActiveButton] = useState('monthly');
   const [chartOptions, setChartOptions] = useState({
     chart: {
       type: 'pie',
-      height: '270px', // Set the height here
-      width: 300,
+     // Set the height here
+      height:smScreen ? 300 : 300,
+      width: smScreen ? 300 : 250 ,
 
     },
-   
+  
     plotOptions: {
       pie: {
         innerSize: '50%',
@@ -188,18 +191,18 @@ const DonutChart = () => {
   ];
 
   return (
-    <div>
-      <Grid container>
-        <Grid item md={4}>
+    <div >
+      <Grid container sx={{width: smScreen ? "300px" : "100%"}} >
+        <Grid item md={4} xs={12}>
         <Typography variant="h5" color="initial">Top 4 Products</Typography>
         </Grid>
-        <Grid item md={8}>
+        <Grid item md={8} xs={12}>
 
-        <ButtonGroup aria-label="Time Period" sx={{ display: "flex", justifyContent: "flex-end", border: "none" }}>
+        <ButtonGroup aria-label="Time Period" sx={{  display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', flexDirection: smScreen ? 'column' : 'row'  }}>
         {buttons}
       </ButtonGroup>
         </Grid>
-      </Grid>
+    
       
 
       <Grid container spacing={0}>
@@ -217,6 +220,7 @@ const DonutChart = () => {
           <HighchartsReact highcharts={Highcharts} options={chartOptions} ref={chartRef} />
         </Grid>
       </Grid>
+      </Grid>   
 
       <style>
         {`

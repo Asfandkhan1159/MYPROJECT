@@ -19,6 +19,7 @@ import {
   Menu,
   MenuItem,
   Dialog, DialogTitle, DialogContent, DialogContentText,
+  useTheme,useMediaQuery,Box
 } from "@mui/material";
 import {
   
@@ -48,12 +49,13 @@ import CostManagementIcon from '../assets/SideBarICons/sidebar_Icons/com31.svg'
 import SettingIcon from '../assets/SideBarICons/sidebar_Icons/com61.svg'
 import { useInventoryData } from "./Inventory/InventoryDataContext";
 import  {calculateDynamicThreshold, isOutOfStock } from "../services/InventoryService/InventoryDataService";
+import MainContent from "./MainContent";
 const drawerWidth = 300;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  zIndex: 1, // z-index set to 1
+  zIndex: theme.zIndex.drawer - 1,  // z-index set to 1
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -71,11 +73,14 @@ const AppBar = styled(MuiAppBar, {
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
+   
     "& .MuiDrawer-paper": {
       position: "relative",
+      flexShrink: 2,
+      zIndex: theme.zIndex.drawer,
       whiteSpace: "nowrap",
       width: drawerWidth,
-      height: "100%", // Set a fixed height
+      height: "auto", // Set a fixed height
       transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
@@ -104,6 +109,7 @@ const Search = styled(Paper)(({ theme }) => ({
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   marginLeft: 0,
   width: 'auto',
+  zIndex: 2,  // Ensure higher zIndex for search
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(1),
     width: 'auto',
@@ -118,6 +124,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  zIndex: 3,  // Ensure higher zIndex for search icon
 }));
 
 const InputBaseWrapper = styled(InputBase)(({ theme }) => ({
@@ -125,12 +132,11 @@ const InputBaseWrapper = styled(InputBase)(({ theme }) => ({
   paddingLeft: `calc(1em + ${theme.spacing(4)})`,
   transition: theme.transitions.create('width'),
   width: '100%',
+  zIndex: 4,  // Ensure higher zIndex for input base
   [theme.breakpoints.up('md')]: {
     width: '20ch',
   },
 }));
-
-
 
 
 const defaultTheme = createTheme();
@@ -142,12 +148,12 @@ const DrawerHeader = styled("div")(({ Drawer }) => ({
   padding: "1rem",
 }));
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const Sidebar = () => {
+const Sidebar = ({children}) => {
   const {rows} = useInventoryData();
   const [openDashboard, setOpenDashboard] = useState(false);
   const [openPurchases, setOpenPurchases] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [openCostManagement, setOpenCostManagement] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -224,24 +230,16 @@ const handleClose = () => {
 
   const childItemClass = "child-sidebar-item"; 
 
+  
+ 
+
   return (
-    <div>
+    <Box display="flex">
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AppBar sx={{ display: 'flex', backgroundColor: '#fff', color: 'black' }}>
+        <AppBar sx={{ display: 'flex', backgroundColor: '#fff', color: 'black', position:'fixed' }}>
       <Toolbar>
-        {/* <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="open drawer"
-          onClick={toggleSidebar}
-          sx={{
-            marginRight: '36px',
-          }}
-        >
-          <MenuIcon />
-        </IconButton> */}
-        {/* Your logo */}
+        
         <div style={{ flexGrow: 1 }} />
         {/* Search */}
         <Search component="form">
@@ -250,7 +248,7 @@ const handleClose = () => {
           </SearchIconWrapper>
           <InputBaseWrapper
             placeholder="Search..."
-            inputProps={{ 'aria-label': 'search' }}
+            
           />
         </Search>
         {/* Notifications */}
@@ -276,9 +274,9 @@ const handleClose = () => {
       </Dialog>
         </div>
         {/* Avatar */}
-        <div style={{marginLeft:"36px"}}>
+        <div>
         <IconButton color="inherit" onClick={handleAvatarClick}>
-          <Avatar alt="User Avatar" src="/path/to/avatar.jpg" />
+          <Avatar alt="User Avatar" src="https://mui.com/static/images/avatar/2.jpg" />
         </IconButton>
         </div>
         <Menu
@@ -299,12 +297,16 @@ const handleClose = () => {
       </Toolbar>
     </AppBar>
 
-        <Drawer variant="permanent" anchor="left" open={isSidebarOpen} display="flex" sx={{height:"100vh"}}>
+        <Drawer variant="permanent" anchor="right" open={isSidebarOpen} display="flex" sx={{height:"100vh"}}>
         <DrawerHeader sx={{ display: "flex", justifyContent: "start", alignItems: "center", padding: "16px" }}>
           {isSidebarOpen && (
             <>
-              <img src={Logo} alt="Logo" style={{ width: 56, height: 41, marginRight: "8px" }} />
-              <Typography variant="h6">Estanomics</Typography>
+             <Link to="/dashboard/home" style={{ textDecoration: 'none' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <img src={Logo} alt="Logo" style={{ width: 56, height: 41 }} />
+              <Typography variant="body-1">estanomics</Typography>
+            </div>
+          </Link>
             </>
           )}
           {!isSidebarOpen && (
@@ -430,6 +432,14 @@ const handleClose = () => {
           </ListItemIcon>
           <ListItemText primary="Reviews" />
         </ListItemButton>
+        <ListItemButton
+        component={Link}
+        to="/dashboard/getrebates" >
+          <ListItemIcon>
+          <img src={ReviewsIcon} alt="" />
+          </ListItemIcon>
+          <ListItemText primary="Rebates" />
+        </ListItemButton>
         <ListItemButton onClick={toggleCostManagement}>
         <ListItemIcon>
              <img src={CostManagementIcon} alt="" />
@@ -472,7 +482,7 @@ const handleClose = () => {
        
        
         
-        <ListItemButton onClick={togglePurchases}>
+        {/* <ListItemButton onClick={togglePurchases}>
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>
@@ -489,10 +499,10 @@ const handleClose = () => {
               >
                 <ListItemIcon>
                 
-                {/* Add an icon for the second dropdown item */}
+                
               </ListItemIcon>
             
-              <Typography variant="body-2" color="initial">Monitoring</Typography>
+              <Typography variant="body-2" color="initial">Social Media </Typography>
               </ListItemButton>
               <ListItemButton
         component={Link}
@@ -504,10 +514,10 @@ const handleClose = () => {
         >
           <ListItemIcon>
                 
-                {/* Add an icon for the second dropdown item */}
+              
               </ListItemIcon>
          
-              <Typography variant="body-2" color="initial">AI Generated Campaigns</Typography>
+              <Typography variant="body-2" color="initial">Feedback</Typography>
         </ListItemButton>
         
         <ListItemButton
@@ -521,21 +531,37 @@ const handleClose = () => {
           
         <ListItemIcon>
                 
-                {/* Add an icon for the second dropdown item */}
+        
+              </ListItemIcon>
+         
+              <Typography variant="body-2" color="initial">Discount Deals</Typography>
+        </ListItemButton>
+        
+        <ListItemButton
+        component={Link}
+        to="/dashboard/customersegmentation"
+        sx={{ ...childItemStyle, "&.child-sidebar-item": { marginLeft: '42px' } }}
+        className={childItemClass}
+      
+              
+        > 
+          
+        <ListItemIcon>
+                
+               
               </ListItemIcon>
          
               <Typography variant="body-2" color="initial">Customer Segmentation</Typography>
         </ListItemButton>
-        
 
-            {/* Add more dropdown items as needed */}
+           
           </List>
           <Divider
             variant="middle"
             orientation="horizontal"
             
           />
-        </Collapse>
+        </Collapse> */}
         {/* Add more top-level menu items here */}
         
         <ListItemButton onClick={toggleSettings}>
@@ -581,8 +607,12 @@ const handleClose = () => {
         
       </List>
     </Drawer>
+   
     </ThemeProvider>
-    </div>
+    <MainContent>
+          {children}
+        </MainContent>
+    </Box>
     
   );
 };

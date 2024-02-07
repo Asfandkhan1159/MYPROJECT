@@ -12,10 +12,10 @@ const data = [
 const RevenueCard = () => {
   return (
     <div>
-      <Card sx={{width:"100%",maxWidth:"500px", height:"177px"}}>
-      <Typography level="title-lg">Revenue by Location</Typography>
+      <Card sx={{ height:"177px"}}>
+      
         <CardContent>
-        
+        <Typography level="title-lg">Revenue by Location</Typography>
           <Grid container spacing={5}>
             {data.map((item, index) => (
               <Grid item md={6} key={index}>

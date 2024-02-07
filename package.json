@@ -20,6 +20,8 @@
     "@mui/x-data-grid": "^6.17.0",
     "@mui/x-data-grid-generator": "^6.17.0",
     "@react-google-maps/api": "^2.19.2",
+    "@remotion/player": "^4.0.85",
+    "@remotion/transitions": "^4.0.85",
     "axios": "^1.5.0",
     "bcryptjs": "^2.4.3",
     "chart.js": "^4.4.0",
@@ -39,6 +41,7 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^6.21.1",
     "react-transition-group": "^4.4.5",
+    "remotion": "^4.0.85",
     "styled-components": "^6.0.5",
     "uuid": "^9.0.0",
     "yup": "^1.2.0"

@@ -4,7 +4,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import UserActions from './UserActions';
-import { Fab, CircularProgress,Button, Dialog, DialogTitle, DialogContent, TextField  } from '@mui/material';
+import { Fab, CircularProgress,Button, Dialog, DialogTitle, DialogContent, TextField,useTheme,
+  styled,
+useMediaQuery,createTheme   } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -17,7 +19,8 @@ const User = () => {
   const [success, setSuccess] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [newUser, setNewUser] = useState({});
-
+  const theme = useTheme();
+  const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const handleSave = () => {
     setLoading(true);
     // Simulate saving changes
@@ -155,10 +158,8 @@ const User = () => {
       </Dialog>
           
         </Box>
-        <Box sx={{
-          height: 400,
-          width: '100%',
-        }}>
+        <Box width={smScreen ? "400px" : "100%"}
+sx={{ overflow: 'auto' }}>
           
           <DataGrid
             columns={columns}

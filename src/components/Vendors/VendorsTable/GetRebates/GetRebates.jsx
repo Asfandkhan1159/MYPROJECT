@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Sidebar from "../../../SideBar";
-import { Box, Typography } from '@mui/material';
+import { Box, Typography,Button } from '@mui/material';
 import Autocomplete from '@mui/joy/Autocomplete';
 import TextField from '@mui/joy/TextField'; // Import TextField from @mui/joy
 import { useVendorData } from "../VendorDataContext";
@@ -32,6 +32,17 @@ const GetRebates = () => {
     { field: 'quantity', headerName: 'Quantity', width: 150 },
     { field: 'amount', headerName: 'Amount', width: 150 },
     { field: 'category', headerName: 'Category', width: 150 },
+    {
+      field: 'action',
+      headerName: 'Action',
+      width: 250,
+      renderCell: (params) => (
+        <Button variant="contained" sx={{backgroundColor:"black", color:"white"}}>
+          Claim Rebate
+        </Button>
+      ),
+    },
+   
   ];
 
   return (
@@ -56,7 +67,7 @@ const GetRebates = () => {
         </Box>
         <Box sx={{ backgroundColor: "", padding: "2rem", margin: "2rem" }}>
           <DataGrid rows={filteredData} columns={columns} pageSize={5} sx={{
-            width: "75%",
+            width: "100%",
             backgroundColor: "white",
           }} />
         </Box>

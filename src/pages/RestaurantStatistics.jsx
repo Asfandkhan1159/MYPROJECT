@@ -1,97 +1,104 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Container,
-  Paper,
+  Typography,
   Grid,
   Card,
   CardContent,
-  Typography,
-  Hidden,
   useTheme,
-  useMediaQuery,
-  styled,
-  createTheme
+  useMediaQuery
 } from '@mui/material';
 import WeeklyRevenueChart from '../components/Charts/WeeklyRevenue';
-import Sidebar from '../components/SideBar';
-// import Box from '@mui/material/Box'
 import CustomerSatisfaction from '../components/Charts/CustomerSatisfaction';
 import RevenueCard from '../components/Card/RevenueCard/RevenueCard';
 import SalesComparison from '../components/Charts/SalesComparison';
 import ReviewSummary from '../components/Card/ReviewSummary/ReviewSummary';
+import Sidebar from '../components/SideBar';
 import BoilerPlate from '../components/BoilerPlate/BoilerPlate';
-import useResponsiveStyles from '../services/Responsive/getResponsiveStyles';
-const Heading = styled(Typography)(({ theme }) => ({
-  textAlign: "start",
-  color: "black",
-  fontWeight: 200,
-  // paddingTop: "1em",
-  marginBottom:"20px",
-  [theme.breakpoints.down("md")]: {
-    fontSize: "1.5rem",
-  },
-}));
+import TrendingProducts from '../components/Card/TrendingProductsCard/TrendingProducts';
+import PurchasingStatsCard from '../components/Card/PurchasingStats/PurchasingStatsCard';
 const RestaurantStatistics = () => {
-  const theme = createTheme({
-    breakpoints: {
-      values: {
-        xs: 0,
-        sm: 600,
-        md: 900,
-        lg: 1200,
-        xl: 1536,
-      },
-    },
-  });
-  const smScreen = useMediaQuery(theme.breakpoints.down('xs'));
-  const { getResponsiveStyles } = useResponsiveStyles();
-
-
+  const theme = useTheme();
+  const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
   return (
-    <React.Fragment>
-      <Box sx={{ display: 'flex', width: 'auto' }}>
-        <BoilerPlate>
-        <Box component="main"
-         display={smScreen ? "block" : "flex"}
-         flexDirection={smScreen ? "row" : "column"}
-         justifyContent={smScreen ? "space-between" : "start"}
-         alignItems={smScreen ? "center" : "start"}
-        
-        sx={{ flexGrow: 1, mt: 8 }}>
-          <Heading variant="h4">Restaurant Metrics</Heading>
-          <Box sx={{ backgroundColor: "#F6F6F4", py:"2rem"}}>
-            <Grid container spacing={5}>
-              
-                <Grid item xs={12} md={6.5} >
-               <WeeklyRevenueChart/>
-              
-                </Grid>
-            
-              <Grid item xs={12} md={5.5}>
-                <Card variant="outlined" sx={{maxWidth:"100%"}}>
+    <Box sx={{ display: 'flex' }}>
+      <BoilerPlate>
+       
+
+        <Box component="main" sx={{ }}>
+          <Typography variant="h4" component="div">
+            Restaurant Metrics
+          </Typography>
+
+          {/* Your content goes here */}
+          <Box sx={{ backgroundColor: "#F6F6F4", py: "2rem", px:"2rem", position: 'relative' }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6.5}>
+                <Card variant="outlined">
                   <CardContent>
-                 <CustomerSatisfaction/>
+                    <WeeklyRevenueChart />
                   </CardContent>
-                 
                 </Card>
+              </Grid>
+              <Grid item xs={12} md={5.5}>
+                <Card variant="outlined">
+                  <CardContent>
+                    <CustomerSatisfaction />
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={6.5}>
+                <Card variant="outlined">
+                  <CardContent>
+                    <SalesComparison />
+                  </CardContent>
+                </Card>
+              </Grid>
+
+              <Grid item xs={12} md={5.5}>
+               
                 
-                
+                  <ReviewSummary />
+                 
+                <RevenueCard />
               </Grid>
               <Grid item md={6.5} xs={12}>
-                <SalesComparison/>
+                <TrendingProducts/>
               </Grid>
-              <Grid item md={5.5} sx={{marginTop:"-2.5rem"}}>
-                <RevenueCard/>
-                <ReviewSummary/>
+              <Grid item md={5.5} xs={12}>
+              <Card variant="outlined" sx={{width:smScreen ? '300px' : '100%'}}>
+                  <CardContent>
+                <PurchasingStatsCard  heading='Restaurant Statistics Weekly '
+                 revenueTitle="Expenses"
+                 revenue='$7800'
+                 profitTitle="Profit"
+                  profit='$2200'
+                  salesTitle="No. of Sales"
+                   sales='$10000'
+                   vendorsTitle="Total Vendors"
+                    vendors='3' />
+                    </CardContent>
+                  </Card>
+                  <Card variant="outlined" sx={{width:smScreen ? '300px' : '100%', mt:1}}>
+                  <CardContent>
+                <PurchasingStatsCard  heading='Purchasing Overview'
+                 revenueTitle="Purchases"
+                 revenue='23'
+                 profitTitle="Low stock"
+                  profit='23'
+                  salesTitle="Cost"
+                   sales='$780'
+                   vendorsTitle="Cost Variation"
+                    vendors='45%' />
+                    </CardContent>
+                  </Card>
               </Grid>
-             
             </Grid>
           </Box>
         </Box>
-        </BoilerPlate>
-      </Box>
-    </React.Fragment>  );
+      </BoilerPlate>
+    </Box>
+  );
 };
 
 export default RestaurantStatistics;

@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-
+import { Card, CardContent, useTheme, useMediaQuery } from '@mui/material';
 const CustomerSatisfaction = () => {
+  const theme = useTheme();
+  const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [chartData, setChartData] = useState({
     chart: {
       type: 'area',
-      height: '237px',
-      width:500,
-    
+      height: smScreen ? 300 : 300,
+      width: smScreen ? 300 : 500 ,
       backgroundColor: '#f8f9fa', // Set a light background color
     },
     title: {

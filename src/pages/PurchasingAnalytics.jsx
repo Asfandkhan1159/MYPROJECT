@@ -9,7 +9,7 @@ import GroupImage from '../assets/miniCardIcons/Group 1000002788.svg';
 import RevenueIcon from '../assets/RevenueIcon.svg';
 import SalesIcon from '../assets/miniCardIcons/Subtract.svg'
 import ProfitIcon from '../assets/miniCardIcons/Group.svg'
-import FinanceFlowChart from '../components/Charts/FinanceFlow';
+import RestaurantFinanceChart from '../components/Charts/FinanceFlow';
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import PurchaseOverview from '../components/Card/PurchaseOverview/PurchaseOverview';
@@ -17,6 +17,7 @@ import DonutChart from '../components/Charts/Donut/DonutChart';
 import WeeklyStatsCard from '../components/Card/WeeklyStatsCard/WeeklyStatsCard';
 import Navbar from '../components/Navbar';
 import BoilerPlate from '../components/BoilerPlate/BoilerPlate.jsx';
+import PurchasingStatsCard from '../components/Card/PurchasingStats/PurchasingStatsCard.jsx';
 import{useTheme,
   styled,
 useMediaQuery,
@@ -64,27 +65,27 @@ const PurchasingAnalytics = () => {
 const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <React.Fragment>
-      <Box sx={{ display: 'flex', width: 'auto' }}>
-        <BoilerPlate>
-        <Box component="main"
-         display={smScreen ? "block" : "flex"}
-         flexDirection={smScreen ? "row" : "column"}
-         justifyContent={smScreen ? "space-between" : "start"}
-         alignItems={smScreen ? "center" : "start"}
-        
-        sx={{ flexGrow: 1, mt: 8 }}>
-          <Heading variant="h4">Purchasing Analytics</Heading>
-          <Box sx={{ backgroundColor: "#F6F6F4", px:"2rem" }}>
-            <Grid container spacing={2}>
+      <Box sx={{ display: 'flex' }}>
+      <BoilerPlate>
+       
+
+        <Box component="main"  sx={{ }}>
+          <Typography variant="h4" component="div">
+            Purchasing Analytics
+          </Typography>
+
+          {/* Your content goes here */}
+          <Box sx={{ backgroundColor: "#F6F6F4", py: "2rem", px:"2rem", position: 'relative' }}>
+            <Grid container spacing={5}>
               {revenueOptions.map((option, index) => (
-                <Grid item xs={12} md={3} key={index}>
+                <Grid item xs={12} md={3} sm={6} lg={3} xl={3} key={index}>
                   <MiniCard title={option.title} image={option.image} value={option.value} backgroundColor={option.backgroundColor} />
                 </Grid>
               ))}
               <Grid item xs={12} md={6}>
-                <Card variant="outlined" sx={{maxWidth:"auto", height:"90%"}}>
+                <Card variant="outlined" sx={{width : smScreen ? '300px' : '100%'}}>
                   <CardContent>
-                  <FinanceFlowChart/>
+                  <RestaurantFinanceChart/>
                   </CardContent>
                  
                 </Card>
@@ -97,7 +98,7 @@ const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
                
               </Grid>
               <Grid item xs={12} md={6}>
-              <Card variant="outlined" sx={{width:"auto", height:"88%"}}>
+              <Card variant="outlined" sx={{width : smScreen ? '300px' : '100%'}}>
                   <CardContent>
                   
                <DonutChart/>
@@ -109,9 +110,9 @@ const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
               </Grid>
               <Grid item md={6}>
 
-              <Card variant="outlined" sx={{width:"auto", height:"88%"}}>
+              <Card variant="outlined" sx={{width:smScreen ? '300px' : '100%' , height:"100%"}}>
                   <CardContent>
-                <WeeklyStatsCard  heading='Purchasing Overview'
+                <PurchasingStatsCard  heading='Purchasing Overview'
                  revenueTitle="Purchases"
                  revenue='23'
                  profitTitle="Low stock"

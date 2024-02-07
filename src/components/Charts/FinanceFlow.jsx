@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { Button, ButtonGroup } from '@mui/material';
+import { Button, ButtonGroup, useTheme, useMediaQuery } from '@mui/material';
 
 const RestaurantFinanceChart = () => {
   const [data, setData] = useState([]);
@@ -37,7 +37,8 @@ const RestaurantFinanceChart = () => {
 
     return data;
   };
-
+  const theme = useTheme();
+  const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const options = {
     title: {
       text: 'Restaurant Cash Inflows',
@@ -56,7 +57,8 @@ const RestaurantFinanceChart = () => {
       },
     },
     chart: {
-      height: 300,
+      height:smScreen ? 300 : 300,
+      width: smScreen ? 300 : 600 ,
     },
     tooltip: {
       formatter: function () {
@@ -152,14 +154,13 @@ const RestaurantFinanceChart = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-      
-        <ButtonGroup aria-label="Time Period" sx={{ border: 'none', height:"30px" }}>
-          {buttons}
-        </ButtonGroup>
-      </div>
-      <HighchartsReact highcharts={Highcharts} options={options} />
+    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', flexDirection: smScreen ? 'column' : 'row' }}>
+      <ButtonGroup aria-label="Time Period" sx={{  display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', flexDirection: smScreen ? 'column' : 'row'  }}>
+        {buttons}
+      </ButtonGroup>
     </div>
+    <HighchartsReact highcharts={Highcharts} options={options} />
+  </div>
   );
 };
 

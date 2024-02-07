@@ -15,6 +15,8 @@ import {
   MenuItem,
   FormControl,
   Box,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 
 const tableData = [
@@ -31,6 +33,9 @@ const linearProgressColors = ['#205B84', '#0D3D2F', '#4A2A8B'];
 const TrendingProducts = () => {
   const [topProducts, setTopProducts] = useState('');
   const [selectedTimePeriod, setSelectedTimePeriod] = useState('');
+  const theme = useTheme();
+  const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const linearProgressColors = ['#205B84', '#0D3D2F', '#4A2A8B'];
 
   const generateTopProductsOptions = () => {
     const options = tableData.map((product, index) => (
@@ -63,6 +68,7 @@ const TrendingProducts = () => {
     setSelectedTimePeriod(event.target.value);
   };
 
+
   return (
     <div>
       <Grid
@@ -72,58 +78,137 @@ const TrendingProducts = () => {
           boxShadow: '0px 1px 20px 0px #0D0D0D1A',
           padding: '1.2rem',
           borderRadius: '8px',
-          maxHeight: '300px',
+          height: '445px', width: smScreen ? '300px' : '100%' ,
+          
+          marginBottom: '20px',
+         
           overflowY: 'auto',
-          marginBottom: '20px', // Adjust as needed
-          width:'auto'
+          '&::-webkit-scrollbar': {
+            width: '8px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'grey',
+            borderRadius: '4px',
+          },
+          '&::-webkit-scrollbar-track': {
+            backgroundColor: '#ccc',
+          },
         }}
+        
       >
-        <Stack sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Box sx={{ marginBottom: '10px' }}>
-            <Typography variant="h4" sx={{ width: '100%', height: '25px', fontFamily: 'Poppins', fontWeight: '500', fontSize: '20px', color: 'rgba(0,0,0,1)' }}>
-              <b>Trending Eats</b>
-            </Typography>
-          </Box>
-          <div style={{marginLeft:'2rem' ,display: 'flex', justifyContent: 'end', alignItems: 'end' }}>
-            <FormControl>
-              <Select
-                defaultValue='Top 3 products'
-                value={topProducts}
-                onChange={handleTopProductsChange}
-                sx={{ width: '200px', height: "30px", marginRight: '10px' }}
-              >
-                {generateTopProductsOptions()}
-              </Select>
-            </FormControl>
-            <FormControl>
-              <Select
-                value={selectedTimePeriod}
-                onChange={handleTimePeriodChange}
-                sx={{ width: '150px', height: "30px" }}
-              >
-                {generateTimePeriodOptions()}
-              </Select>
-            </FormControl>
-          </div>
-        </Stack>
-        <TableContainer sx={{ padding: "1rem" }}>
-          <Table>
-            {/* Table Head */}
-            <TableHead>
-              <TableRow>
-                <TableCell>Sr</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Popularity</TableCell>
-                <TableCell sx={{ display: "flex", justifyContent: "flex-end" }}>Sales</TableCell>
-              </TableRow>
-            </TableHead>
-            {/* Table Body */}
-            <TableBody>
-              {tableData.map((row, index) => (
-                <TableRow key={row.sr} sx={{ padding: 0, margin: 0 }}>
-                  <TableCell sx={{ border: 'none', padding: 2, margin: 0, fontSize: '14px' }}>{row.sr}</TableCell>
-                  <TableCell sx={{ border: 'none', padding: 2, margin: 0, fontSize: '14px' }}>{row.name}</TableCell>
-                  <TableCell sx={{ border: 'none', padding: 2, margin: 0, fontSize: '14px' }}>
+        <Grid item xs={12} md={4}>
+          <Typography variant="h4" sx={{ width: '100%', height: '25px', fontFamily: 'Poppins', fontWeight: '500', fontSize: '20px', color: 'rgba(0,0,0,1)' }}>
+            <b>Trending Eats</b>
+          </Typography>
+        </Grid>
+        <Grid item xs={12} md={8} sx={{ display: 'flex', justifyContent: smScreen ? 'center' : 'center', alignItems: 'flex-end' }}>
+          <FormControl sx={{ marginBottom: smScreen ? '10px' : '0', marginRight: smScreen ? '0' : '10px', width: smScreen ? '100%' : '200px' }}>
+            <Select
+              defaultValue='Top 3 products'
+              value={topProducts}
+              onChange={handleTopProductsChange}
+              displayEmpty
+              inputProps={{ 'aria-label': 'Without label' }}
+              sx={{ width: '100%', height: "30px", textAlign: 'center' }}
+            >
+              <MenuItem value='' disabled>Select Top Products</MenuItem>
+              {generateTopProductsOptions()}
+            </Select>
+          </FormControl>
+          <FormControl sx={{ marginBottom: smScreen ? '10px' : '0', marginRight: smScreen ? '0' : '10px', width: smScreen ? '100%' : '200px' }}>
+            <Select
+              value={selectedTimePeriod}
+              onChange={handleTimePeriodChange}
+              displayEmpty
+              inputProps={{ 'aria-label': 'Without label' }}
+              sx={{ width: '100%', height: "30px", textAlign: 'center' }}
+            >
+              <MenuItem value='' disabled>Select Time Period</MenuItem>
+              {generateTimePeriodOptions()}
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <TableContainer sx={{ px:'2rem', py:"0.9rem", margin: '-8px' }}>
+            <Table>
+              {/* Table Head */}
+              <TableHead>
+  <TableRow>
+    <TableCell
+      sx={{
+        padding: '2px', // Adjust padding
+        margin: 0,
+        fontSize: '14px',
+      }}
+    >
+      Sr
+    </TableCell>
+    <TableCell
+      sx={{
+        padding: '2px', // Adjust padding
+        margin: 0,
+        fontSize: '14px',
+        width:"200px"
+      }}
+    >
+      Name
+    </TableCell>
+    <TableCell
+      sx={{
+        padding: '2px', // Adjust padding
+        margin: 0,
+        fontSize: '14px',
+      }}
+    >
+      Popularity
+    </TableCell>
+    <TableCell
+      sx={{
+        padding: '2px', // Adjust padding
+        margin: 0,
+        fontSize: '14px',
+        display: "flex",
+        justifyContent: "flex-end",
+      }}
+    >
+      Sales
+    </TableCell>
+  </TableRow>
+</TableHead>
+
+              {/* Table Body */}
+              <TableBody sx={{height:"30px"}}>
+                {tableData.map((row, index) => (
+                  <TableRow key={row.sr} sx={{ padding: 0, margin: 0}}>
+                <TableCell
+                      sx={{
+                        border: 'none',
+                        padding: '8px', // Adjust padding
+                        margin: 0,
+                        fontSize: '14px',
+                        height:"2px"
+                      }}
+                    >
+                      {row.sr}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        border: 'none',
+                        padding: '8px', // Adjust padding
+                        margin: 0,
+                        fontSize: '14px',
+                      }}
+                    >
+                      {row.name}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        border: 'none',
+                        padding: '8px', // Adjust padding
+                        margin: 0,
+                        fontSize: '14px',
+                      }}
+                    >
                     <LinearProgress
                       variant="determinate"
                       value={row.sales}
@@ -139,7 +224,7 @@ const TrendingProducts = () => {
                       }}
                     />
                   </TableCell>
-                  <TableCell sx={{ border: 'none', display: "flex", justifyContent: "flex-end", padding: 2, margin: 0, fontSize: '14px' }}>
+                  <TableCell sx={{ border: 'none', display: "flex", justifyContent: "flex-end", margin: 0, fontSize: '14px' }}>
                     <Chip label={`${row.sales}%`} variant="outlined" color="success" sx={{ borderRadius: "8px", display: "flex", justifyContent: "flex-end" }}>
                       {row.sales}%
                     </Chip>
@@ -148,7 +233,8 @@ const TrendingProducts = () => {
               ))}
             </TableBody>
           </Table>
-        </TableContainer>
+          </TableContainer>
+        </Grid>
       </Grid>
     </div>
   )

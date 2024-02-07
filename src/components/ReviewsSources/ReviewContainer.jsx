@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Avatar, Rating, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Box, Typography, Avatar, Rating, FormControl, InputLabel, Select, MenuItem, useTheme,useMediaQuery, Grid } from '@mui/material';
 
 const ReviewContainer = ({ reviews, selectedSources, selectedRating }) => {
   const [filteredReviews, setFilteredReviews] = useState([]);
+  const theme = useTheme();
+  const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     let filtered = reviews;
@@ -32,18 +34,28 @@ const ReviewContainer = ({ reviews, selectedSources, selectedRating }) => {
     return <Typography variant="body1">No reviews available</Typography>;
   }
 
+  
+
   return (
+   
     <Box>
-      <Box sx={{ width: "auto", height: "504px", overflowY: "scroll", padding: "30px", "&::-webkit-scrollbar": { width: "0.4em" }, "&::-webkit-scrollbar-track": { background: "#f1f1f1" }, "&::-webkit-scrollbar-thumb": { backgroundColor: "#888" }, "&::-webkit-scrollbar-thumb:hover": { background: "#555" } }}>
+      <Box sx={{ width: smScreen ? "300px" : "auto",
+       height: "504px",
+        overflowY: "scroll",
+         padding: "30px",
+          "&::-webkit-scrollbar": { width: "0.4em" },
+           "&::-webkit-scrollbar-track": { background: "#f1f1f1" },
+            "&::-webkit-scrollbar-thumb": { backgroundColor: "#888" },
+             "&::-webkit-scrollbar-thumb:hover": { background: "#555" } }}>
         {filteredReviews.map((source, index) => (
           <Box display="flex" key={index} mb={3}>
             <Box>
               {source.reviews.map((review, idx) => (
                 <Box key={idx} display="flex" alignItems="center" width="auto">
                   <Avatar alt={source.name} src={source.logo} />
-                  <Typography sx={{ marginTop: '18px', width: "300px" }}>
+                  <Typography sx={{ marginTop: '18px', width: smScreen ? "200px" : "300px" }}>
                     {review.text} 
-                  <Box display='flex' justifyContent="space-between">
+                  <Box display='flex' flexDirection={smScreen ? "column" : "row"} justifyContent="space-between">
                   <Typography variant='caption'>Food: {review.foodRating}</Typography>
                   <Typography variant='caption'>Service: {review.serviceRating}</Typography>
                   <Typography variant='caption'>Value: {review.valueRating}</Typography>

@@ -38,7 +38,7 @@ import BoilerPlate from '../BoilerPlate/BoilerPlate';
 import { calculateDynamicThreshold, isOutOfStock } from '../../services/InventoryService/InventoryDataService';
 import { DataGrid } from '@mui/x-data-grid';
 import FeaturedItems from './FeaturedItems';
-import {List, ListItemButton, ListItemText } from '@mui/material'
+import {List, ListItemButton, ListItemText,useTheme, useMediaQuery  } from '@mui/material'
 import InventoryInsights from './InventoryInsights';
 const currentDate = new Date();
 console.log(currentDate)
@@ -111,6 +111,9 @@ console.log(currentDate)
   const [selected, setSelected] = useState([]);
   const [open, setOpen] = useState(false);
   const [customer, setCustomer] = useState('all');
+  
+  const theme = useTheme();
+  const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleCustomerChange = (event) => {
     const selectedValue = event.target.getAttribute('data-value');
@@ -247,38 +250,27 @@ const columns = [
         </Select>
      
     </FormControl>
-    <List sx={{ display: 'flex', alignItems: 'center' }}>
+ 
+    </React.Fragment>
+  );
+    return (
+      // <InventoryDataProvider>
+      <div>
+      <Box>
+      <BoilerPlate>
+        <Box component="main" sx={{ flexGrow: 4}}>
+          <Box sx={{ display: smScreen ? 'block' : 'flex',justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <Typography variant="h4" color="initial" sx={{ marginLeft: '2rem', fontSize: '40px' }}>
+              Inventory
+            </Typography>
+            <List sx={{ display: 'flex', alignItems: 'center' }}>
               <ListItemButton component={Link}
               to='/dashboard/insights'
               >
                 <ListItemText primary="Get Insights" />
               </ListItemButton>
               </List>
-    </React.Fragment>
-  );
-    return (
-      // <InventoryDataProvider>
-        <Box sx={{display:"flex", width:"1197px"}}>
-   
-        <Sidebar />
-        
-        <Box
-            sx={{
-              display: 'flex',
-              my: 1,
-              gap: 1,
-              flexDirection: { xs: 'column', sm: 'row' },
-              alignItems: { xs: 'start', sm: 'center' },
-              flexWrap: 'wrap',
-              justifyContent: 'space-between',
-            }}
-          >
-           
-
-        <Box component="main" sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, pt: 3, mt: 8, px: '1rem' }}>
-  <span>
-    <h1 style={{ display: 'inline' }}>Inventory</h1>
-  </span>
+    </Box>
   <Box>
   
   <FeaturedItems featuredItems={featuredItems} />
@@ -398,10 +390,12 @@ const columns = [
             Next
           </Button>
         </Box>
-      </Box>
+   
       <InventoryList/>
       </Box>
+      </BoilerPlate>
       </Box>
+      </div>
       // </InventoryDataProvider>
     )
   }

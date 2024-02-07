@@ -2,17 +2,19 @@ import React, { useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import drilldown from 'highcharts/modules/drilldown';
-import { Card, CardContent } from '@mui/material';
+import { Card, CardContent, useTheme, useMediaQuery } from '@mui/material';
 
 // Initialize drilldown module
 drilldown(Highcharts);
 
 const WeeklyRevenueChart = () => {
+  const theme = useTheme();
+  const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [chartData, setChartData] = useState({
     chart: {
       type: 'column',
-      height: '270px',
-      width: '500',
+      height: 300,
+      width: smScreen ? 300 : 600 ,
       backgroundColor: '#f8f9fa',
     },
     title: {
@@ -111,11 +113,9 @@ const WeeklyRevenueChart = () => {
   });
 
   return (
-    <Card>
-      <CardContent>
+    <div>
         <HighchartsReact highcharts={Highcharts} options={chartData} />
-      </CardContent>
-    </Card>
+     </div>
   );
 };
 

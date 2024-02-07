@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import ReviewContainer from './ReviewContainer';
 import ReviewSourcesData from './ReviewSourcesData';
 import RandomEntityReviewData from './ReviewSourcesData2';
-import { Box, Typography, Grid, Paper, FormControl, InputLabel, Select, MenuItem, Chip } from '@mui/material';
+import { Box, Typography, Grid, Paper, FormControl, InputLabel, Select, MenuItem, Chip, useTheme, useMediaQuery } from '@mui/material';
 import BoilerPlate from '../BoilerPlate/BoilerPlate';
 import TheGrooveLogo from '../../assets/Groove/Ellipse 1118.svg'
 
@@ -21,12 +21,13 @@ const CompareReviewsComponent = () => {
   const handleRatingChange = (event) => {
     setSelectedRating(event.target.value);
   };
-
+  const theme = useTheme();
+  const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <BoilerPlate>
       <Typography variant="h4" color="initial" sx={{padding:"2rem"}}>Compare Reviews</Typography>
       <Box sx={{backgroundColor:"#F6F6F4"}}>
-      <Box display="flex" justifyContent="space-between" px="2rem" my="2rem" py="2rem" >
+      <Box display={smScreen ? "block" : "flex"}justifyContent="space-between" px="2rem" my="2rem" py="2rem" >
         
       <img src={TheGrooveLogo} alt="" />
       <Typography variant="h5" color="initial" sx={{alignSelf:"center"}}>The Groove vs</Typography>
@@ -42,7 +43,7 @@ const CompareReviewsComponent = () => {
     <MenuItem >Thirty</MenuItem>
   </Select>
       </FormControl>
-       <FormControl sx={{backgroundColor:"white"}}>
+       <FormControl sx={{width:"350px",backgroundColor:"white"}}>
               
               <Select
                 labelId="sources-label"
@@ -59,7 +60,7 @@ const CompareReviewsComponent = () => {
                 ))}
               </Select>
             </FormControl>
-            <FormControl sx={{ mx: '30px', backgroundColor:"white" }}>
+            <FormControl sx={{width:"350px", backgroundColor:"white" }}>
              
               <Select labelId="rating-label" id="rating" value={selectedRating} onChange={handleRatingChange}>
                 <MenuItem value="All">All stars</MenuItem>
@@ -72,14 +73,14 @@ const CompareReviewsComponent = () => {
             </FormControl>
             </Box>
       <Grid container spacing={5} sx={{ display: 'flex', justifyContent: 'space-around', padding: '20px', alignItem: 'end' }}>
-        <Grid item md={6}>
+        <Grid item md={6} xs={12}>
           <Paper elevation={3} sx={{ padding: '1px', width:"auto" }}>
             <Typography variant="h5">The Groove Reviews</Typography>
            
             <ReviewContainer reviews={grooveReviews} selectedSources={selectedSources} selectedRating={selectedRating} />
           </Paper>
         </Grid>
-        <Grid item md={6}>
+        <Grid item md={6} xs={12}>
           <Paper elevation={3} sx={{ padding: '1px' }}>
             <Typography variant="h5">Ed's Traven</Typography>
             

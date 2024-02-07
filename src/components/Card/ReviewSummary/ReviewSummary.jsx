@@ -39,7 +39,7 @@ const ReviewSummary = () => {
 
   return (
    
-    <Card>     
+    <Card variant='outlined' sx={{ marginBottom: 2 }}>     
       <CardContent>
         <Typography variant="h6" color="initial">
           Review summary

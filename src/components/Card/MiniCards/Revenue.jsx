@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-
+import { useTheme, useMediaQuery } from '@mui/material';
 const MiniCard = (props) => {
   const cardStyle = {
     width: 77,
@@ -21,9 +21,11 @@ const MiniCard = (props) => {
     backgroundColor: props.backgroundColor, // Apply background color here
   };
  console.log(props.backgroundColor)
+ const theme = useTheme();
+  const smScreen = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <div>
-      <Card sx={{contentStyle, width:"auto"}}>
+      <Card sx={{ width: smScreen ? '300px' : '280px' }}>
         <CardContent sx={contentStyle}>
           <img src={props.image} alt="" style={{ width: "76.38px", height: "38.95px", alignSelf: "center" }} />
           <div style={{ display: 'flex', flexDirection: 'column', marginLeft: "1.8rem" }}>

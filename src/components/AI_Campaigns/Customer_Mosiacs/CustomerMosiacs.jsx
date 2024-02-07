@@ -73,10 +73,10 @@ const CustomerMosiacs = () => {
           
        
        <h1>Coupons</h1>
-        <Grid container spacing={0} sx={{ display: 'grid', gridTemplateColumns: smScreen ? 'repeat(1,1fr)' :'repeat(3, 1fr)', gridGap: '1rem' }}>
+        <Grid container spacing={4} sx={{ width: '100%', justifyContent: 'space-between' }}>
           {couponsData.map((coupon, index) => (
             <Grid item key={index} md={6} xs={12} sm={12}>
-              <Card orientation="horizontal" variant="outlined" sx={{ width: 360 }}>
+              <Card orientation="horizontal" variant="outlined">
   <CardOverflow>
     <AspectRatio ratio="1" sx={{ width: 140 }}>
       <img
